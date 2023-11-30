@@ -100,11 +100,20 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $users = DB::table('users')
+
+        DB::table('users')
             ->where('id',$id)
             ->update([
-
+                'user_name'=>$request->user_name,
+                'first_name'=>$request->first_name,
+                'last_name'=>$request->last_name,
+                'age'=>$request->age,
+                'gender'=>$request->gender,
+                'phone_number'=>$request->phone_number,
+                'address'=>$request->address,
+                'post_code'=>$request->postal_code,
             ]);
+        return redirect()->route('users.index');
 
 
 
