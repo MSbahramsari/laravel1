@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
@@ -23,7 +24,14 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $products = DB::table('products')
+            ->where('status', '=','enable')
+            ->get();
+        $users = DB::table('users')
+            ->where('status','=','enable')
+            ->get();
+        return view('orders.addOrder', ['users' => $users , 'products'=>$products]);
+
     }
 
     /**

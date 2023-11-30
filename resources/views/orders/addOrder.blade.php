@@ -35,7 +35,7 @@
         <section class="content">
             <!-- form start -->
             <div class="container-fluid">
-                <form role="form" method="post" action="{{route('store_order')}}">
+                <form role="form" method="post" action="{{route('orders.store')}}">
                     @csrf
                     <div class="form-group">
                         <div class="col">
@@ -43,23 +43,12 @@
                             <input type="text" class="form-control" id="order_name" name="order_name"
                                    placeholder="اسم سفارش">
                         </div>
-                        <label for="customer_id">customers</label>
+                        <label for="customer_id">users</label>
                         <select class="form-control" id="customer_id" name="customer_id">
-                            @foreach($customers as $customer)
-                                <option value="{{$customer->id}}">
-                                    name: {{$customer->last_name}},
-                                    Email: {{$customer->email}}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="seller_id">sellers</label>
-                        <select class="form-control" id="seller_id" name="seller_id">
-                            @foreach($sellers as $seller)
-                                <option value="{{$seller->id}}">
-                                    name: {{$seller->last_name}},
-                                    Email: {{$seller->email}}
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}">
+                                    name: {{$user->last_name}},
+                                    Email: {{$user->email}}
                                 </option>
                             @endforeach
                         </select>
@@ -82,14 +71,14 @@
                                             <table class="table">
                                                 <thead>
                                                 <tr>
-                                                    <th>Product Name</th>
-                                                    <th>Product Price</th>
-                                                    <th>Amount Available</th>
-                                                    <th>Amount Requested</th>
+                                                    <th>نام محصول</th>
+                                                    <th>قیمت</th>
+                                                    <th>موجودی</th>
+                                                    <th>درخواست</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach($products_available as $product)
+                                                @foreach($products as $product)
                                                     <tr>
                                                         <td>{{$product->product_name}}</td>
                                                         <td>{{$product->price}}</td>
