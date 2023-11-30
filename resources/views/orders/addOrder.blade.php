@@ -40,11 +40,11 @@
                     <div class="form-group">
                         <div class="col">
                             <label for="order_name">اسم سفارش</label>
-                            <input type="text" class="form-control" id="order_name" name="order_name"
+                            <input type="text" class="form-control" id="order_name" name="title"
                                    placeholder="اسم سفارش">
                         </div>
                         <label for="customer_id">users</label>
-                        <select class="form-control" id="customer_id" name="customer_id">
+                        <select class="form-control" id="customer_id" name="user_id">
                             @foreach($users as $user)
                                 <option value="{{$user->id}}">
                                     name: {{$user->last_name}},
@@ -89,11 +89,12 @@
                                                                         onclick="changeProductQuantity(this, -1)">
                                                                     <i class="fas fa-minus"></i>
                                                                 </button>
-                                                                <input min="0" name="Product_{{$product->id}}" value="0"
+                                                                <input min="0" name="{{$product->id}}" value="0"
                                                                        type="number"
                                                                        max="{{$product->amount_available}}"
                                                                        class="form-control form-control-sm"
                                                                        style="width: 70px;"/>
+{{--                                                                <input type="hidden" name="product_id" value="{{$product->id}}">--}}
                                                                 <button class="btn btn-link px-2" type="button"
                                                                         onclick="changeProductQuantity(this, 1)">
                                                                     <i class="fas fa-plus"></i>

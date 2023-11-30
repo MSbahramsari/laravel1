@@ -39,7 +39,42 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $products = DB::table('products')
+            ->where('status', '=','enable')
+            ->get();
+        $totalPrice = 0;
+        $data = $request->all();
+        $productsIds = [];
+        foreach ($products as $product){
+            foreach ($data as $key =>$value ){
+                if($product->id == $key){
+                    $price = $product->price;
+                    $amount = $request->$key;
+                    $sum = $price * $amount;
+                    $totalPrice += $sum;
+                }
+
+            }
+            $productsIds []= $product->id;
+        }
+        DB::table('orders')->insert([
+            'user_id'=>$request->user_id,
+            'title'=>$request->title,
+            'total_price'=>$totalPrice,
+            'status'=>"enable",
+            'created_at'=>date('Y-m-d H:i:s'),
+        ]);
+        $orderid = DB::getPdo()->lastInsertId();
+        foreach ($productsIds as $productId){
+            DB::table('order_products')->insert([
+                'order_id'=>$orderid,
+                'product_id'=> $productId,
+                'created_at'=>date('Y-m-d H:i:s')
+            ]);
+
+        }
+
+
     }
 
     /**
