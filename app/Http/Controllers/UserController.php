@@ -67,9 +67,14 @@ class UserController extends Controller
      */
     public function edit(string $id): view
     {
-        $user = DB::select('select * from users where id = ?', [$id]);
+        $users = DB::table('users')->where('id', $id) -> first();
+//        $users = DB::select('select * from users where id = ?', [$id]);
+//        foreach ($users as $user){
+//            $id = $user->id;
+//        }
+//        dd($id);
 
-        return view('users.editUser', ['user' => $user]);
+        return view('users.editUser', ['user' => $users]);
 
     }
 

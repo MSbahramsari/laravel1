@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>ادیت کاربر </h1>
+                <h1>ادیت کاربر {{$user->id}}</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-left">
