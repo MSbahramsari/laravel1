@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 
@@ -30,29 +31,47 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
-        {
-            $user_name = $request->input('user_name');
-            $first_name = $request->input('first_name');
-            $last_name = $request->input('last_name');
-            $age = $request->input('age');
-            $gender = $request->input('gender');
-            $email = $request->input('email');
-            $phone_number = $request->input('phone_number');
-            $password = md5($request->input('password'));
-            $address = $request->input('address');
-            $postal_code = $request->input('postal_code');
-            $province = $request->input('province');
-            $city = $request->input('city');
-            DB::insert('insert into users (user_name , first_name , last_name , age , gender , email , phone_number , password , address , post_code , province , city , status , created_at)
-                values (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)',
-                [$user_name , $first_name , $last_name ,$age ,$gender,$email,$phone_number,$password,$address,$postal_code,$province,$city,'enable',date('Y-m-d H:i:s')]);
 
+        $request->validate([
+            'user_name'=>'required|max:20|alpha_dash:ascii',
+            'last_name'=>'required|max:255|alpha_dash:ascii',
+            'first_name'=>'required|max:255|alpha_dash:ascii' ,
+            'age'=>'required|min:18|',
+            'gender'=>'required',
+            'email'=>'required',
+            'phone_number'=>'required|min:11|max:11',
+            'password'=>'required|min:8',
+            'address'=>'required',
+            'post_code'=>'required|min:10|max:255',
+            'province'=>'required',
+            'city'=>'required',
+        ]);
+//
+            DB::table('users')->insert([
+                'user_name'=>$request->user_name,
+                'first_name'=>$request->first_name,
+                'last_name'=>$request->last_name,
+                'age'=>$request->age,
+                'gender'=>$request->gender,
+                'email'=>$request->email,
+                'phone_number'=>$request->phone_number,
+                'password'=>md5($request->password),
+                'address'=>$request->address,
+                'post_code'=>$request->postal_code,
+                'province'=>$request->province,
+                'city'=>$request->city,
+                'status'=>"enable",
+                'created_at'=>date('Y-m-d H:i:s'),
+            ]);
             return redirect()->route('users.index');
         }
-    }
+
+
+
 
     /**
      * Display the specified resource.
@@ -68,11 +87,7 @@ class UserController extends Controller
     public function edit(string $id): view
     {
         $users = DB::table('users')->where('id', $id) -> first();
-//        $users = DB::select('select * from users where id = ?', [$id]);
-//        foreach ($users as $user){
-//            $id = $user->id;
-//        }
-//        dd($id);
+
 
         return view('users.editUser', ['user' => $users]);
 
@@ -83,10 +98,12 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $users = DB::update(
-            'update users set  where name = ?',
-            ['Anita']
-        );
+        $users = DB::table('users')
+            ->where('id',$id)
+            ->update([]);
+
+
+
     }
 
     /**
