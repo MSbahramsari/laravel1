@@ -13,7 +13,9 @@ class ProductController extends Controller
      */
     public function index(): view
     {
-        $products = DB::table('products')->get();
+        $products = DB::table('products')
+            ->where('status', '=','enable')
+            ->get();
         return view('.products.productsData' , ['products'=>$products]) ;
     }
 
@@ -60,7 +62,10 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = DB::table('products')->where('id', $id) -> first();
+
+
+        return view('products.editProductMenue', ['product' => $product]);
     }
 
     /**
@@ -68,7 +73,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'product_name'=>'required|max:20',
+            'price'=>'required|integer|min:1000',
+            'amount_available'=>'required|integer|min:1',
+            'explanation'=>'required'
+        ]);
+        DB::table('products')
+            ->where('id' , $id)
+            ->update([   'product_name'=>$request->product_name,
+                    'price'=>$request->price,
+                    'amount_available'=>$request->amount_available,
+                    'explanation'=>$request->explanation,
+                    'amount_sold'=>$request->amount_sold,
+                    'created_at'=>date('Y-m-d H:i:s'),
+                    ]
+            );
+        return redirect()->route('products.index');
     }
 
     /**
@@ -76,6 +97,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('products')
+            ->where('id', $id)
+            ->update(['status' => 'disable']);
+        return back();
     }
 }

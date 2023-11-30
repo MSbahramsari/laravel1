@@ -32,7 +32,7 @@
         <section class="content">
             <!-- form start -->
             <div class="container-fluid">
-                <form role="form" method="post" action="{{route('store_edit_product',['id' => $product->id])}}">
+                <form role="form" method="post" action="{{route('products.update',['id' => $product->id])}}">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
