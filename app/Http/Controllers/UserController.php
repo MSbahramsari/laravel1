@@ -15,7 +15,9 @@ class UserController extends Controller
      */
     public function index(): view
     {
-        $users = DB::table('users')->get();
+        $users = DB::table('users')
+            ->where('status','=','enable')
+            ->get();
         return view('.users.usersData', ['users' => $users]);
     }
 
@@ -100,7 +102,9 @@ class UserController extends Controller
     {
         $users = DB::table('users')
             ->where('id',$id)
-            ->update([]);
+            ->update([
+
+            ]);
 
 
 
@@ -111,6 +115,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['status' => 'disable']);
+        return back();
     }
+
+
 }
