@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -101,9 +103,29 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
 
+
+        $validator = Validator::make($request->all(), [
+            'email'=>'required',
+            'user_name'=>'required|max:20|alpha_dash:ascii',
+            'last_name'=>'required|max:255|alpha_dash:ascii',
+            'first_name'=>'required|max:255|alpha_dash:ascii' ,
+            'age'=>'required|integer|min:18|',
+            'gender'=>'required',
+            'phone_number'=>'required|min:11|max:11',
+            'address'=>'required',
+            'postal_code'=>'required|min:10|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()->withInput()->withErrors($validator);
+        }
+
+
+
         DB::table('users')
             ->where('id',$id)
             ->update([
+                'email'=>$request->email,
                 'user_name'=>$request->user_name,
                 'first_name'=>$request->first_name,
                 'last_name'=>$request->last_name,
