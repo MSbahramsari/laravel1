@@ -45,7 +45,7 @@
                                     <th>نام کالا</th>
                                     <th>توضیحات</th>
                                     <th>قیمت</th>
-                                    <th>سفارشات</th>
+                                    <th>فروخته شده</th>
                                     <th>موجودی</th>
                                     <th>ویرایش</th>
                                     <th>حذف</th>
@@ -59,7 +59,7 @@
                                         <td>{{ $product->product_name }}</td>
                                         <td>{{ $product->explanation }}</td>
                                         <td>{{ $product->price }}</td>
-                                        <td> @if(count($product->orders) > 0)
+                                        <td> @if($product->amount_sold > 0)
                                                 <a class="btn" data-bs-toggle="collapse"
                                                    href="#collapseO{{$product->id}}{{$temp}}">
                                                     orders
@@ -83,7 +83,7 @@
                                         </td>
                                         <td>{{ $product->amount_available }}</td>
                                         <td>
-                                            <form action="{{ route('edit_product', ['id' => $product->id]) }}"
+                                            <form action="{{ route('products.edit', ['id' => $product->id]) }}"
                                                   method="get">
                                                 <button type="submit"><i
                                                             class="fa-regular fa-pen-to-square fa-flip-horizontal"></i>
@@ -91,7 +91,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form action="{{ route('delete_product', ['id' => $product->id]) }}"
+                                            <form action="{{ route('products.destroy', ['id' => $product->id]) }}"
                                                   method="post">
                                                 @csrf
                                                 <button type="submit" onclick="return confirm('Are you sure?')"><i

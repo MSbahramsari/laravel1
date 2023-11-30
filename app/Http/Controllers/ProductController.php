@@ -30,7 +30,21 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_name'=>'required|max:20',
+            'price'=>'required|integer|min:1000',
+            'amount_available'=>'required|integer|min:1',
+            'explanation'=>'required'
+        ]);
+        DB::table('products')
+            ->insert([   'product_name'=>$request->product_name,
+                'price'=>$request->price,
+                'amount_available'=>$request->amount_available,
+                'explanation'=>$request->explanation,
+                'created_at'=>date('Y-m-d H:i:s'),
+                'amount_sold'=>0]
+            );
+        return redirect()->route('products.index');
     }
 
     /**

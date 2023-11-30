@@ -116,13 +116,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-{{--                            <a href="{{route('addProduct')}}" class="nav-link">--}}
+                            <a href="{{route('products.create')}}" class="nav-link">
                                 <i class="fas fa-plus nav-icon"></i>
                                 <p> محصول جدید</p>
                             </a>
                         </li>
                         <li class="nav-item">
-{{--                            <a href="{{route('Products_data')}}" class="nav-link">--}}
+                            <a href="{{route('products.index')}}" class="nav-link">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>لیست محصولات</p>
                             </a>
