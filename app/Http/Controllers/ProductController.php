@@ -3,23 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): view
     {
-        //
+        $products = DB::table('products')->get();
+        return view('.products.productsData' , ['products'=>$products]) ;
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): view
     {
-        //
+        return \view('products.addProduct');
     }
 
     /**
