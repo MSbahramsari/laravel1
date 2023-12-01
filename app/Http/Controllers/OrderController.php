@@ -18,7 +18,7 @@ class OrderController extends Controller
             ->join('order_products', 'order_products.order_id', '=', 'orders.id')
             ->join('products', 'products.id', '=', 'order_products.product_id')
             ->select('orders.id','orders.title','orders.total_price','orders.explanations','order_products.count','orders.user_id', 'users.first_name','users.last_name','users.email','products.product_name','products.price')
-            ->where('status', '=','enable')
+            ->where('orders.status', '=','enable')
             ->get();
         foreach ($orders as $order)
 
@@ -120,6 +120,10 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-    }}
+        DB::table('orders')
+            ->where('id', $id)
+            ->update(['status' => 'disable']);
+        return back();
+    }
+}
 

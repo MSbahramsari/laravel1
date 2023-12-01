@@ -59,8 +59,8 @@
                                             <td>{{$order->title}}</td>
                                             <td>
                                                 <a class="btn" data-bs-toggle="collapse"
-                                                   href="#collapseC{{$order->id}}{{$temp}}">
-                                                    {{$order->id}}
+                                                   href="#collapseC{{$order->user_id}}{{$temp}}">
+                                                    {{$order->user_id}}
                                                 </a>
                                                 <div id="collapseC{{$order->user_id}}{{$temp++}}"
                                                      class="collapse"
