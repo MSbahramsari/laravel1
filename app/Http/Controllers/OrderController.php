@@ -14,8 +14,12 @@ class OrderController extends Controller
     public function index()
     {
         $orders = DB::table('orders')
-            ->where('status', '=','enable')
+            ->join('users', 'users.id', '=', 'orders.user_id')
+            ->join('order_products', 'order_products.order_id', '=', 'orders.id')
+            ->join('products', 'products.id', '=', 'order_products.product_id')
+            ->select('*')
             ->get();
+
         return view('.orders.ordersData' , ['orders'=>$orders]) ;
     }
 
@@ -53,7 +57,6 @@ class OrderController extends Controller
                     $sum = $price * $amount;
                     $totalPrice += $sum;
                 }
-
             }
             $productsIds []= $product->id;
         }
@@ -65,16 +68,23 @@ class OrderController extends Controller
             'created_at'=>date('Y-m-d H:i:s'),
         ]);
         $orderid = DB::getPdo()->lastInsertId();
-        foreach ($productsIds as $productId){
-            DB::table('order_products')->insert([
-                'order_id'=>$orderid,
-                'product_id'=> $productId,
-                'created_at'=>date('Y-m-d H:i:s')
-            ]);
+            foreach ($productsIds as $productId){
+                foreach ($data as $key =>$value ){
+                    if($productId == $key) {
+                        $amount = $request->$key;
+                        if ($amount > 0) {
+                            DB::table('order_products')->insert([
+                                'order_id'=>$orderid,
+                                'product_id'=> $productId,
+                                'count'=> $amount,
+                                'created_at'=>date('Y-m-d H:i:s')
+                            ]);
+                        }
+                    }
+                }
+            }
 
-        }
-
-
+        return route('orders.index') ;
     }
 
     /**
@@ -107,5 +117,5 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-}
+    }}
+
