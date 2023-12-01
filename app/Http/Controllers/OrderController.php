@@ -17,10 +17,14 @@ class OrderController extends Controller
             ->join('users', 'users.id', '=', 'orders.user_id')
             ->join('order_products', 'order_products.order_id', '=', 'orders.id')
             ->join('products', 'products.id', '=', 'order_products.product_id')
-            ->select('*')
+            ->select('orders.id','orders.title','orders.total_price','orders.explanations','order_products.count','orders.user_id', 'users.first_name','users.last_name','users.email','products.product_name','products.price')
+            ->where('status', '=','enable')
             ->get();
+        foreach ($orders as $order)
 
-        return view('.orders.ordersData' , ['orders'=>$orders]) ;
+
+
+        return view('.orders.ordersData' , ['orders'=>$orders ,'order'=>$order]) ;
     }
 
     /**

@@ -45,18 +45,15 @@
                                         <th>ID</th>
                                         <th>اسم سفارش</th>
                                         <th>مشتری</th>
-                                        <th>فروشنده</th>
                                         <th>توضیحات</th>
                                         <th>لیست محصولات</th>
                                         <th>قیمت کل</th>
-                                        <th>بدهی</th>
                                         <th>ویرایش</th>
                                         <th>حذف</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @php($temp = 0)
-                                    @foreach ($orders as $order)
                                         <tr>
                                             <td>{{$order->id}}</td>
                                             <td>{{$order->title}}</td>
@@ -90,17 +87,18 @@
                                                     <div class="card-body">
                                                         <table>
                                                                 <tr>
-                                                                    <td>name : {{$order->product_name}}</td>
-                                                                    <td>price : {{$order->price}}</td>
-                                                                    <td>count : {{$order->pivot->count}}</td>
+                                                                    @foreach($orders as $pro)
+                                                                    <td>name : {{$pro->product_name}}</td>
+                                                                    <td>price : {{$pro->price}}</td>
+                                                                    <td>count : {{$pro->count}}</td>
+                                                                    @endforeach
                                                                 </tr>
-                                                            @endforeach
                                                         </table>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>{{ $order->order_total_price }}</td>
-                                            <td>{{ $order->balance }}</td>
+                                            <td>{{ $order->total_price }}</td>
+                                            {{--                                            <td>{{ $order->balance }}</td>--}}
                                             <td>
                                                 <form class="" action="{{route('orders.create',['id'=>$order->id])}}"
                                                       method="get">
@@ -119,20 +117,8 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    {{--                                    @endforeach--}}
                                     </tbody>
-{{--                                    --}}{{--<tfoot>--}}
-{{--                                    <tr>--}}
-{{--                                        <th>مشتری</th>--}}
-{{--                                        <th>فروشنده</th>--}}
-{{--                                        <th>توضیحات</th>--}}
-{{--                                        <th>لیست محصولات</th>--}}
-{{--                                        <th>قیمت کل</th>--}}
-{{--                                        <th>بدهی</th>--}}
-{{--                                        <th>ویرایش</th>--}}
-{{--                                        <th>حذف</th>--}}
-{{--                                    </tr>--}}
-{{--                                    </tfoot>--}}
                                 </table>
                             </div>
                         </div>
