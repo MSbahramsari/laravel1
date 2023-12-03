@@ -53,7 +53,10 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+{{--                                    @foreach($orders as $order)--}}
                                     @php($temp = 0)
+                                    @foreach ($orders as $order)
+
                                         <tr>
                                             <td>{{$order->id}}</td>
                                             <td>{{$order->title}}</td>
@@ -85,22 +88,24 @@
                                                 <div id="collapseP{{$order->id}}" class="collapse"
                                                      data-bs-parent="#accordion">
                                                     <div class="card-body">
+                                                        @foreach($orders as $pro)
+                                                            @if($pro->id == $order->id)
                                                         <table>
                                                                 <tr>
-                                                                    @foreach($orders as $pro)
                                                                     <td>name : {{$pro->product_name}}</td>
                                                                     <td>price : {{$pro->price}}</td>
                                                                     <td>count : {{$pro->count}}</td>
-                                                                    @endforeach
                                                                 </tr>
                                                         </table>
+                                                            @endif
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>{{ $order->total_price }}</td>
                                             {{--                                            <td>{{ $order->balance }}</td>--}}
                                             <td>
-                                                <form class="" action="{{route('orders.create',['id'=>$order->id])}}"
+                                                <form class="" action="{{route('orders.edit',['id'=>$order->id])}}"
                                                       method="get">
                                                     <button type="submit">
                                                         <i class="fa-regular fa-pen-to-square fa-flip-horizontal"></i>
@@ -118,6 +123,8 @@
                                             </td>
                                         </tr>
                                     {{--                                    @endforeach--}}
+{{--                                    @endforeach--}}
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

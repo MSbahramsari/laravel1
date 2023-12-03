@@ -41,5 +41,5 @@ Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-Route::patch('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
-Route::post('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+Route::any('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
+Route::post('/orders/{id}/delete', [OrderController::class, 'destroy'])->name('orders.destroy');

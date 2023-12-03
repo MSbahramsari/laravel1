@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use function Laravel\Prompts\select;
 
 class OrderController extends Controller
 {
@@ -13,6 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
+
         $orders = DB::table('orders')
             ->join('users', 'users.id', '=', 'orders.user_id')
             ->join('order_products', 'order_products.order_id', '=', 'orders.id')
@@ -20,11 +22,7 @@ class OrderController extends Controller
             ->select('orders.id','orders.title','orders.total_price','orders.explanations','order_products.count','orders.user_id', 'users.first_name','users.last_name','users.email','products.product_name','products.price')
             ->where('orders.status', '=','enable')
             ->get();
-        foreach ($orders as $order)
-
-
-
-        return view('.orders.ordersData' , ['orders'=>$orders ,'order'=>$order]) ;
+        return view('.orders.ordersData' , ['orders'=>$orders]) ;
     }
 
     /**
@@ -104,7 +102,28 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $products = DB::table('products')
+            ->where('status', '=','enable')
+            ->get();
+        $pivot = DB::table('order_products')
+            ->select('order_id','product_id','count')
+            ->where('order_id', $id)
+            ->get();
+        $users = DB::table('users')
+            ->where('status','=','enable')
+            ->get();
+        $orders = DB::table('orders')
+            ->join('users', 'users.id', '=', 'orders.user_id')
+            ->join('order_products', 'order_products.order_id', '=', 'orders.id')
+            ->join('products', 'products.id', '=', 'order_products.product_id')
+            ->select('orders.id','orders.title','orders.total_price','orders.explanations','order_products.count','order_products.product_id','orders.user_id', 'users.first_name','users.last_name','users.email','products.product_name','products.price')
+            ->where('order_id',$id)
+            ->get();
+        foreach ($orders as $order)
+
+
+
+        return view('orders.editOrderMenue', ['users' => $users , 'products'=>$products , 'order'=>$order , 'pivot'=>$pivot]);
     }
 
     /**
@@ -112,7 +131,48 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::table('order_products')
+            ->where('order_id',$id)
+        ->delete();
+        $products = DB::table('products')
+            ->where('status', '=','enable')
+            ->get();
+        $totalPrice = 0;
+        $data = $request->all();
+        $productsIds = [];
+        foreach ($products as $product){
+            foreach ($data as $key =>$value ){
+                if($product->id == $key){
+                    $price = $product->price;
+                    $amount = $request->$key;
+                    $sum = $price * $amount;
+                    $totalPrice += $sum;
+                }
+            }
+            $productsIds []= $product->id;
+        }
+        DB::table('orders')
+            ->where('id',$id)
+            ->update([
+            'total_price'=>$totalPrice,
+        ]);
+        foreach ($productsIds as $productId){
+            foreach ($data as $key =>$value ){
+                if($productId == $key) {
+                    $amount = $request->$key;
+                    if ($amount > 0) {
+                        DB::table('order_products')
+                            ->where('order_id',$id)
+                            ->updateOrInsert([
+                            'order_id'=>$id,
+                            'product_id'=> $productId,
+                            'count'=> $amount,
+                            'created_at'=>date('Y-m-d H:i:s')
+                        ]);
+                    }
+                }
+            }
+        }
     }
 
     /**
