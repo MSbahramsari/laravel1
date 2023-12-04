@@ -86,7 +86,7 @@ class OrderController extends Controller
                 }
             }
 
-        return route('orders.index') ;
+        return redirect('orders.index') ;
     }
 
     /**
@@ -173,6 +173,7 @@ class OrderController extends Controller
                 }
             }
         }
+        return redirect('order.index');
     }
 
     /**
