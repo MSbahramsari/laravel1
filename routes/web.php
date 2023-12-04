@@ -38,6 +38,7 @@ Route::post('/products/{id}/delete', [ProductController::class, 'destroy'])->nam
 
 //orders
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/getOrderProduct', [OrderController::class, 'pro'])->name('orders.pro');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');

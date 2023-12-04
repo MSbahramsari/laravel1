@@ -145,7 +145,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('orders.index')}}" class="nav-link">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>لیست سفارشات</p>
                             </a>

@@ -88,16 +88,21 @@
                                                 <div id="collapseP{{$order->id}}" class="collapse"
                                                      data-bs-parent="#accordion">
                                                     <div class="card-body">
-                                                        @foreach($orders as $pro)
-                                                            @if($pro->id == $order->id)
-                                                        <table>
-                                                                <tr>
-                                                                    <td>name : {{$pro->product_name}}</td>
-                                                                    <td>price : {{$pro->price}}</td>
-                                                                    <td>count : {{$pro->count}}</td>
-                                                                </tr>
-                                                        </table>
+                                                        @foreach($products as $pro)
+                                                            @foreach($pivot as $op)
+                                                            @if($op->order_id == $order->id)
+                                                                @if($op->product_id == $pro->id)
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>name : {{$pro->product_name}}</td>
+                                                                                <td>price : {{$pro->price}}</td>
+                                                                                <td>count : {{$op->count}}</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                @endif
+
                                                             @endif
+                                                        @endforeach
                                                         @endforeach
                                                     </div>
                                                 </div>

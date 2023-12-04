@@ -14,15 +14,18 @@ class OrderController extends Controller
      */
     public function index()
     {
-
+        $pivot = DB::table('order_products')
+            ->select('order_id','product_id','count')
+            ->get();
+        $products = DB::table('products')
+            ->where('status', '=','enable')
+            ->get();
         $orders = DB::table('orders')
             ->join('users', 'users.id', '=', 'orders.user_id')
-            ->join('order_products', 'order_products.order_id', '=', 'orders.id')
-            ->join('products', 'products.id', '=', 'order_products.product_id')
-            ->select('orders.id','orders.title','orders.total_price','orders.explanations','order_products.count','orders.user_id', 'users.first_name','users.last_name','users.email','products.product_name','products.price')
+            ->select('orders.id','orders.title','orders.total_price','orders.explanations','orders.user_id', 'users.first_name','users.last_name','users.email')
             ->where('orders.status', '=','enable')
             ->get();
-        return view('.orders.ordersData' , ['orders'=>$orders]) ;
+        return view('.orders.ordersData' , ['orders'=>$orders , 'pivot'=>$pivot , 'products'=>$products]) ;
     }
 
     /**
@@ -92,9 +95,9 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function pro(string $id)
     {
-        //
+
     }
 
     /**
