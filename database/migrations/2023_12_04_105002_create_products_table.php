@@ -11,22 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->id()->autoIncrement();
-            $table->string('user_name');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->integer('age');
-            $table->enum('gender' , ['male' , 'female']);
-            $table->string('email')->unique();
-            $table->bigInteger('phone_number');
-            $table->string('password');
-            $table->string('address');
-            $table->bigInteger('post_code');
-            $table->string('province');
-            $table->string('city');
+            $table->string('titel');
+            $table->bigInteger('price');
+            $table->integer('inventory');
+            $table->integer('sold_number');
+            $table->string('description');
             $table->timestamps();
             $table->enum('status' , ['enable' , 'disable'])->default('enable');
         });
@@ -37,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('products');
     }
 };

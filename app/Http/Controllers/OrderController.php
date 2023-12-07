@@ -89,7 +89,7 @@ class OrderController extends Controller
                 }
             }
 
-        return redirect('orders.index') ;
+        return redirect()->route('orders.index') ;
     }
 
     /**

@@ -1,0 +1,119 @@
+[33mcommit 8bd82e288be568117996609866092a990a3dcbcb[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mtest[m[33m)[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Mon Dec 4 10:37:56 2023 +0330
+
+    fix orderdata
+
+[33mcommit bd894cd54f485b5b337aa6a202def4fd5682ceb8[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Mon Dec 4 08:11:29 2023 +0330
+
+    add return
+
+[33mcommit c17b739ab31eb72cf911b8420472fbde57161574[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Sun Dec 3 22:14:52 2023 +0330
+
+    complete update
+
+[33mcommit 50dbfd86fe948e48eae489e146dfc3a0da91c561[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Fri Dec 1 13:45:39 2023 +0330
+
+    add distroy controller
+
+[33mcommit 658b8deefd52e7b3189592ec36d212b1e17e5b76[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Fri Dec 1 13:39:51 2023 +0330
+
+    show orders complete
+
+[33mcommit fa7ada7152b042e996fffff27d0355bf078c93a6[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Fri Dec 1 13:09:03 2023 +0330
+
+    connet side bar
+
+[33mcommit 98f738e9d3c89d52d24b54dcb18da1efc1ebca8c[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Fri Dec 1 13:07:39 2023 +0330
+
+    add count in pivot and fix bugs
+
+[33mcommit c997d30f5db91ae00c1b1bcdd070ecabd0818b1c[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 19:59:19 2023 +0330
+
+    add order complete
+
+[33mcommit d4c6e30b8b2bf974ca678c32880a2748b778956b[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 13:32:16 2023 +0330
+
+    شÛØadd orders
+
+[33mcommit 890f2231c88effc60f26cb6b91a8f7d76904c62a[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 13:18:09 2023 +0330
+
+    show orders
+
+[33mcommit 17913820a2f5c7bc4d7b3e52b87b173f34e79e54[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 13:09:16 2023 +0330
+
+    update and delete complte
+
+[33mcommit 59aede51148d4d8aff7420049ee247aeedadf1bd[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 12:56:07 2023 +0330
+
+    add and show products
+
+[33mcommit 0211a080e8fbce214f0a88cb3139a732015594c0[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 12:04:20 2023 +0330
+
+    fix inpuct and create contrils
+
+[33mcommit e837d00eadd15aa7b6ed70c4644f54c7cc2c97f4[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 11:48:22 2023 +0330
+
+    fix sidbar
+
+[33mcommit 5d88afae028ae66e3fbee2071fda39260eca7599[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 11:22:51 2023 +0330
+
+    update with validate
+
+[33mcommit 18b51e4f06d75490d6942c851c7a0ffb6cc40ecf[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 10:56:11 2023 +0330
+
+    update without validate
+
+[33mcommit 05e942f1b1520c53e5085df4bf22c7dd37467f9e[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 10:28:41 2023 +0330
+
+    set delete
+
+[33mcommit 78038dd721e561b62a7bd186d95519a4537bda3a[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 10:16:45 2023 +0330
+
+    سثف رشÙset validator
+
+[33mcommit 7f9458e219d460e28686bc1c2b6e9bdf5309f4da[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 08:27:27 2023 +0330
+
+    show status for edit
+
+[33mcommit eadf9f9e41d6b327b937451c3b0f7ef530823827[m
+Author: bahramsari <avengebahram82@gmail.com>
+Date:   Thu Nov 30 07:59:30 2023 +0330
+
+    show and add user complete
