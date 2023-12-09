@@ -15,11 +15,11 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->id()->autoIncrement();
-            $table->string('titel');
+            $table->string('product_name');
             $table->bigInteger('price');
-            $table->integer('inventory');
+            $table->integer('amount_available');
             $table->integer('sold_number');
-            $table->string('description');
+            $table->string('explanation');
             $table->timestamps();
             $table->enum('status' , ['enable' , 'disable'])->default('enable');
         });
