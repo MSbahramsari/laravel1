@@ -128,23 +128,7 @@ class UserController extends Controller
                 'address'=>$request->address,
                 'postal_code'=>$request->postal_code,
         ]);
-//        DB::table('users')
-//            ->where('id',$id)
-//            ->update([
-//                'email'=>$request->email,
-//                'user_name'=>$request->user_name,
-//                'first_name'=>$request->first_name,
-//                'last_name'=>$request->last_name,
-//                'age'=>$request->age,
-//                'gender'=>$request->gender,
-//                'phone_number'=>$request->phone_number,
-//                'address'=>$request->address,
-//                'postal_code'=>$request->postal_code,
-//            ]);
         return redirect()->route('users.index');
-
-
-
     }
 
     /**
@@ -152,9 +136,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('users')
-            ->where('id', $id)
-            ->update(['status' => 'disable']);
+        $user = User::find($id);
+        $user -> delete();
         return back();
     }
 
