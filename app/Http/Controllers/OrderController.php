@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -14,18 +15,22 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $pivot = DB::table('order_products')
-            ->select('order_id','product_id','count')
-            ->get();
-        $products = DB::table('products')
-            ->where('status', '=','enable')
-            ->get();
-        $orders = DB::table('orders')
-            ->join('users', 'users.id', '=', 'orders.user_id')
-            ->select('orders.id','orders.title','orders.total_price','orders.explanations','orders.user_id', 'users.first_name','users.last_name','users.email')
-            ->where('orders.status', '=','enable')
-            ->get();
-        return view('.orders.ordersData' , ['orders'=>$orders , 'pivot'=>$pivot , 'products'=>$products]) ;
+//        $pivot = DB::table('order_products')
+//            ->select('order_id','product_id','count')
+//            ->get();
+//        $products = DB::table('products')
+//            ->where('status', '=','enable')
+//            ->get();
+//        $orders = DB::table('orders')
+//            ->join('users', 'users.id', '=', 'orders.user_id')
+//            ->select('orders.id','orders.title','orders.total_price','orders.explanations','orders.user_id', 'users.first_name','users.last_name','users.email')
+//            ->where('orders.status', '=','enable')
+//            ->get();
+//        return view('.orders.ordersData' , ['orders'=>$orders , 'pivot'=>$pivot , 'products'=>$products]) ;
+        $orders = Order::with('products')->get();
+//        dd($orders);
+
+        return view('.orders.ordersData' , ['orders'=>$orders]) ;
     }
 
     /**

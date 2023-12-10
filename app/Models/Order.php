@@ -13,4 +13,13 @@ class Order extends Model
         'total_price',
         'status'
     ];
+    public function users() {
+    return $this->belongsTo(User::class);
+    }
+    public function products() {
+    return $this->belongsToMany(Product::class)->withPivot('count');
+    }
+//    public function pivot() {
+//        return $this->belongsToMany(Order_product::class);
+//    }
 }

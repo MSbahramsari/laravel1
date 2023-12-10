@@ -1,3 +1,6 @@
+{{--@foreach($orders as $order)--}}
+{{--    {{print("<pre>".print_r($order,true)."</pre>");}}--}}
+{{--@endforeach--}}
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,9 +36,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        {{--<div class="card-header">
+                        <div class="card-header">
                             <h3 class="card-title"></h3>
-                        </div>--}}
+                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="container">
@@ -53,10 +56,8 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-{{--                                    @foreach($orders as $order)--}}
+                                    @foreach($orders as $order)
                                     @php($temp = 0)
-                                    @foreach ($orders as $order)
-
                                         <tr>
                                             <td>{{$order->id}}</td>
                                             <td>{{$order->title}}</td>
@@ -88,27 +89,19 @@
                                                 <div id="collapseP{{$order->id}}" class="collapse"
                                                      data-bs-parent="#accordion">
                                                     <div class="card-body">
-                                                        @foreach($products as $pro)
-                                                            @foreach($pivot as $op)
-                                                            @if($op->order_id == $order->id)
-                                                                @if($op->product_id == $pro->id)
+                                                        @foreach($order->products as $pro)
                                                                         <table>
                                                                             <tr>
                                                                                 <td>name : {{$pro->product_name}}</td>
                                                                                 <td>price : {{$pro->price}}</td>
-                                                                                <td>count : {{$op->count}}</td>
+                                                                                <td>count : {{$pro->pivot->count}}</td>
                                                                             </tr>
                                                                         </table>
-                                                                @endif
-
-                                                            @endif
-                                                        @endforeach
                                                         @endforeach
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>{{ $order->total_price }}</td>
-                                            {{--                                            <td>{{ $order->balance }}</td>--}}
                                             <td>
                                                 <form class="" action="{{route('orders.edit',['id'=>$order->id])}}"
                                                       method="get">
@@ -127,9 +120,8 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    {{--                                    @endforeach--}}
-{{--                                    @endforeach--}}
-                                    @endforeach
+                                                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
