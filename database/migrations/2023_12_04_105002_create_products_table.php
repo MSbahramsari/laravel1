@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('sold_number');
             $table->string('explanation');
             $table->timestamps();
-            $table->enum('status' , ['enable' , 'disable'])->default('enable');
+            $table->softDeletes();
         });
     }
 

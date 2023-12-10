@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('title');
             $table->bigInteger('total_price');
-           $table->timestamps();
-            $table->enum('status' , ['enable' , 'disable'])->default('enable');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

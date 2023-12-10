@@ -26,7 +26,7 @@ class User extends Authenticatable
         'password',
         'image',
         'address',
-        'postal_code',
+        'post_code',
         'province',
         'city',
         'status'

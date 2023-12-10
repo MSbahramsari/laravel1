@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('province');
             $table->string('city');
             $table->timestamps();
-            $table->enum('status' , ['enable' , 'disable'])->default('enable');
+            $table->softDeletes();
         });
     }
 

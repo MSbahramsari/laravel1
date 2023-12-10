@@ -10,6 +10,7 @@ class Order_product extends Model
     protected $fillable = [
         'order_id',
         'product_id',
+        'count'
     ];
 //    public function orders() {
 //        return $this->belongsToMany(Order::class);

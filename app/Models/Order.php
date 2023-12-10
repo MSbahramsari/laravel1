@@ -11,7 +11,6 @@ class Order extends Model
         'user_id',
         'title',
         'total_price',
-        'status'
     ];
     public function users() {
     return $this->belongsTo(User::class);

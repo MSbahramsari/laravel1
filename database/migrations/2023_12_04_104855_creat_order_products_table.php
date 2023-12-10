@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->integer('order_id');
             $table->integer('product_id');
-            $table->timestamps();
-            $table->enum('status' , ['enable' , 'disable'])->default('enable');
             $table->integer('count')->default(0);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

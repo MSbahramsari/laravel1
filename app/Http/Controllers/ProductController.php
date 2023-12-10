@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -13,9 +14,10 @@ class ProductController extends Controller
      */
     public function index(): view
     {
-        $products = DB::table('products')
-            ->where('status', '=','enable')
-            ->get();
+        $products = Product::all();
+//        $products = DB::table('products')
+//            ->where('status', '=','enable')
+//            ->get();
         return view('.products.productsData' , ['products'=>$products]) ;
     }
 
@@ -38,14 +40,14 @@ class ProductController extends Controller
             'amount_available'=>'required|integer|min:1',
             'explanation'=>'required'
         ]);
-        DB::table('products')
-            ->insert([   'product_name'=>$request->product_name,
-                'price'=>$request->price,
-                'amount_available'=>$request->amount_available,
-                'explanation'=>$request->explanation,
-                'created_at'=>date('Y-m-d H:i:s'),
-                'amount_sold'=>0]
-            );
+//        DB::table('products')
+//            ->insert([   'product_name'=>$request->product_name,
+//                'price'=>$request->price,
+//                'amount_available'=>$request->amount_available,
+//                'explanation'=>$request->explanation,
+//                'created_at'=>date('Y-m-d H:i:s'),
+//                'amount_sold'=>0]
+//            );
         return redirect()->route('products.index');
     }
 

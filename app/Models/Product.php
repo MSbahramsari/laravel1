@@ -7,19 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'product_name',
         'price',
         'amount_available',
         'sold_number',
         'explanation',
-        'status'
     ];
+
+
+
     public function orders() {
         return $this->belongsToMany(Order::class);
     }
