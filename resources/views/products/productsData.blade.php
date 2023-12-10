@@ -59,28 +59,7 @@
                                         <td>{{ $product->product_name }}</td>
                                         <td>{{ $product->explanation }}</td>
                                         <td>{{ $product->price }}</td>
-                                        <td> @if($product->amount_sold > 0)
-                                                <a class="btn" data-bs-toggle="collapse"
-                                                   href="#collapseO{{$product->id}}{{$temp}}">
-                                                    orders
-                                                </a>
-                                                <div id="collapseO{{$product->id}}{{$temp++}}" class="collapse"
-                                                     data-bs-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <table>
-                                                            <th>Order ID</th>
-                                                            <th>Count</th>
-                                                            @foreach($product->orders as $order)
-                                                                <tr>
-                                                                    <td>{{ $order->id }}</td>
-                                                                    <td>{{ $order->pivot->count }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </td>
+                                        <td> {{$product->sold_number}}</td>
                                         <td>{{ $product->amount_available }}</td>
                                         <td>
                                             <form action="{{ route('products.edit', ['id' => $product->id]) }}"
@@ -100,20 +79,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>id</th>
-                                    <th>نام کالا</th>
-                                    <th>توضیحات</th>
-                                    <th>قیمت</th>
-                                    <th>سفارشات</th>
-                                    <th>موجودی</th>
-                                    <th>ویرایش</th>
-                                    <th>حذف</th>
-                                </tr>
-                                </tfoot>
-                            </table>
                         </div>
                         <!-- /.card-body -->
                     </div>

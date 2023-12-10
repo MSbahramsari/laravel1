@@ -50,17 +50,12 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $product = DB::table('products')->where('id', $id) -> first();
+        $product = Product::find($id);
 
 
         return view('products.editProductMenue', ['product' => $product]);
@@ -77,16 +72,13 @@ class ProductController extends Controller
             'amount_available'=>'required|integer|min:1',
             'explanation'=>'required'
         ]);
-        DB::table('products')
-            ->where('id' , $id)
-            ->update([   'product_name'=>$request->product_name,
+        Product::find($id)->update([
+                    'product_name'=>$request->product_name,
                     'price'=>$request->price,
-                    'amount_available'=>$request->amount_available,
+                    'amount_available'=>$request->amount_available - $request->amount_sold,
+                    'sold_number'=>$request->amount_sold,
                     'explanation'=>$request->explanation,
-                    'amount_sold'=>$request->amount_sold,
-                    'created_at'=>date('Y-m-d H:i:s'),
-                    ]
-            );
+        ]);
         return redirect()->route('products.index');
     }
 
@@ -95,9 +87,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('products')
-            ->where('id', $id)
-            ->update(['status' => 'disable']);
+        $product = Product::find($id);
+        $product->delete();
         return back();
     }
 }
