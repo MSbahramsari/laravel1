@@ -63,7 +63,7 @@ class UserController extends Controller
             'phone_number'=>$request->phone_number,
             'password'=>md5($request->password),
             'address'=>$request->address,
-            'post_code'=>$request->postal_code,
+            'postal_code'=>$request->postal_code,
             'province'=>$request->province,
             'city'=>$request->city,
         ]);
@@ -86,10 +86,10 @@ class UserController extends Controller
      */
     public function edit(string $id): view
     {
-        $users = DB::table('users')->where('id', $id) -> first();
+        $user = User::find($id);
 
 
-        return view('users.editUser', ['user' => $users]);
+        return view('users.editUser', ['user' => $user]);
 
     }
 
@@ -102,9 +102,9 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'email'=>'required',
-            'user_name'=>'required|max:20|alpha_dash:ascii',
-            'last_name'=>'required|max:255|alpha_dash:ascii',
-            'first_name'=>'required|max:255|alpha_dash:ascii' ,
+            'user_name'=>'required|max:20|',
+            'last_name'=>'required|max:255|',
+            'first_name'=>'required|max:255|' ,
             'age'=>'required|integer|min:18|',
             'gender'=>'required',
             'phone_number'=>'required|min:11|max:11',
@@ -117,10 +117,7 @@ class UserController extends Controller
         }
 
 
-
-        DB::table('users')
-            ->where('id',$id)
-            ->update([
+        User::whereId($id)->update([
                 'email'=>$request->email,
                 'user_name'=>$request->user_name,
                 'first_name'=>$request->first_name,
@@ -129,8 +126,21 @@ class UserController extends Controller
                 'gender'=>$request->gender,
                 'phone_number'=>$request->phone_number,
                 'address'=>$request->address,
-                'post_code'=>$request->postal_code,
-            ]);
+                'postal_code'=>$request->postal_code,
+        ]);
+//        DB::table('users')
+//            ->where('id',$id)
+//            ->update([
+//                'email'=>$request->email,
+//                'user_name'=>$request->user_name,
+//                'first_name'=>$request->first_name,
+//                'last_name'=>$request->last_name,
+//                'age'=>$request->age,
+//                'gender'=>$request->gender,
+//                'phone_number'=>$request->phone_number,
+//                'address'=>$request->address,
+//                'postal_code'=>$request->postal_code,
+//            ]);
         return redirect()->route('users.index');
 
 

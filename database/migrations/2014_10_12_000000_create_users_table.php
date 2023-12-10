@@ -24,7 +24,7 @@ return new class extends Migration
             $table->bigInteger('phone_number');
             $table->string('password');
             $table->string('address');
-            $table->bigInteger('post_code');
+            $table->bigInteger('postal_code');
             $table->string('province');
             $table->string('city');
             $table->timestamps();

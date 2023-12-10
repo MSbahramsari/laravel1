@@ -79,7 +79,7 @@
                         <div class="form-group">
                             <label for="postal_code">کد پستی</label>
                             <input type="number" class="form-control" id="postal_code" name="postal_code"
-                                   placeholder="{{$user->post_code}}" value="{{$user->post_code}}">
+                                   placeholder="{{$user->post_code}}" value="{{$user->postal_code}}">
                         </div>
 
                         <div class="form-group">
