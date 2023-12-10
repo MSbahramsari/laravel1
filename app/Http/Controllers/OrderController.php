@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Order_product;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -38,12 +41,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $products = DB::table('products')
-            ->where('status', '=','enable')
-            ->get();
-        $users = DB::table('users')
-            ->where('status','=','enable')
-            ->get();
+        $products = Product::all();
+        $users = User::all();
         return view('orders.addOrder', ['users' => $users , 'products'=>$products]);
 
     }
@@ -54,9 +53,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $products = DB::table('products')
-            ->where('status', '=','enable')
-            ->get();
+        $products = Product::all();
         $totalPrice = 0;
         $data = $request->all();
         $productsIds = [];
@@ -71,25 +68,34 @@ class OrderController extends Controller
             }
             $productsIds []= $product->id;
         }
-        DB::table('orders')->insert([
+        Order::create([
             'user_id'=>$request->user_id,
             'title'=>$request->title,
             'total_price'=>$totalPrice,
-            'status'=>"enable",
-            'created_at'=>date('Y-m-d H:i:s'),
         ]);
+//        DB::table('orders')->insert([
+//            'user_id'=>$request->user_id,
+//            'title'=>$request->title,
+//            'total_price'=>$totalPrice,
+//            'status'=>"enable",
+//            'created_at'=>date('Y-m-d H:i:s'),
+//        ]);
         $orderid = DB::getPdo()->lastInsertId();
             foreach ($productsIds as $productId){
                 foreach ($data as $key =>$value ){
                     if($productId == $key) {
                         $amount = $request->$key;
                         if ($amount > 0) {
-                            DB::table('order_products')->insert([
+                            Order_product::create([
                                 'order_id'=>$orderid,
                                 'product_id'=> $productId,
                                 'count'=> $amount,
-                                'created_at'=>date('Y-m-d H:i:s')
                             ]);
+//                            DB::table('order_products')->insert([
+//                                'order_id'=>$orderid,
+//                                'product_id'=> $productId,
+//                                'count'=> $amount,
+//                                'created_at'=>date('Y-m-d H:i:s')
                         }
                     }
                 }
