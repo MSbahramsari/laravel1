@@ -11,6 +11,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    use softDeletes ;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,7 +46,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     /**
      * The attributes that should be cast.
      *
@@ -55,7 +56,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
     public function orders() {
-        return $this->hasOne(Order::class);
+        return $this->hasMany(Order::class);
     }
-    use softDeletes ;
 }

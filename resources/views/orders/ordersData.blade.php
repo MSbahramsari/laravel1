@@ -72,8 +72,8 @@
                                                     <div class="card-body">
                                                         <table>
                                                             <tr>
-                                                                <th>{{$order->first_name}} {{$order->last_name}}</th>
-                                                                <th>{{$order->email}}</th>
+                                                                <th>{{$order->user->first_name}} {{$order->user->last_name}}</th>
+                                                                <th>{{$order->user->email}}</th>
                                                             </tr>
                                                         </table>
                                                     </div>

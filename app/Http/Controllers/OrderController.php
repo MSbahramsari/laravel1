@@ -18,7 +18,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('products')->get();
+        $orders = Order::with('products')->with('user')->get();
         return view('.orders.ordersData' , ['orders'=>$orders]) ;
     }
 
@@ -104,6 +104,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $pivot = Order_product::where('order_id' , $id)->forcedelete();
         $products = Product::all();
         $totalPrice = 0;
         $data = $request->all();
@@ -126,7 +127,7 @@ class OrderController extends Controller
                 if($productId == $key) {
                     $amount = $request->$key;
                     if ($amount > 0) {
-                        Order_product::update([
+                        Order_product::create([
                             'order_id'=>$id,
                             'product_id'=> $productId,
                             'count'=> $amount,
