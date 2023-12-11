@@ -91,13 +91,13 @@
                                                                             onclick="changeProductQuantity(this, -1)">
                                                                         <i class="fas fa-minus"></i>
                                                                     </button>
-                                                                    <input min="0" name={{$product->id}}
+                                                                    <input min="0" name="{{$product->id}}"
                                                                            placeholder="0"
                                                                            @php($temp = 0)
-                                                                               @foreach($pivot as $orderProduct)
-                                                                                   @if($orderProduct->product_id == $product->id)
-                                                                                       value="{{$orderProduct->count}}"
-                                                                           @php($temp += $orderProduct->count)
+                                                                           @foreach($order->products as $orderProduct)
+                                                                               @if($orderProduct->pivot->product_id == $product->id)
+                                                                                   value="{{$orderProduct->pivot->count}}"
+                                                                           @php($temp += $orderProduct->pivot->count)
                                                                            @break
                                                                            @endif
                                                                            @endforeach

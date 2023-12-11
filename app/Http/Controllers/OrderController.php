@@ -18,21 +18,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-//        $pivot = DB::table('order_products')
-//            ->select('order_id','product_id','count')
-//            ->get();
-//        $products = DB::table('products')
-//            ->where('status', '=','enable')
-//            ->get();
-//        $orders = DB::table('orders')
-//            ->join('users', 'users.id', '=', 'orders.user_id')
-//            ->select('orders.id','orders.title','orders.total_price','orders.explanations','orders.user_id', 'users.first_name','users.last_name','users.email')
-//            ->where('orders.status', '=','enable')
-//            ->get();
-//        return view('.orders.ordersData' , ['orders'=>$orders , 'pivot'=>$pivot , 'products'=>$products]) ;
         $orders = Order::with('products')->get();
-//        dd($orders);
-
         return view('.orders.ordersData' , ['orders'=>$orders]) ;
     }
 
@@ -73,13 +59,7 @@ class OrderController extends Controller
             'title'=>$request->title,
             'total_price'=>$totalPrice,
         ]);
-//        DB::table('orders')->insert([
-//            'user_id'=>$request->user_id,
-//            'title'=>$request->title,
-//            'total_price'=>$totalPrice,
-//            'status'=>"enable",
-//            'created_at'=>date('Y-m-d H:i:s'),
-//        ]);
+
         $orderid = DB::getPdo()->lastInsertId();
             foreach ($productsIds as $productId){
                 foreach ($data as $key =>$value ){
@@ -91,11 +71,6 @@ class OrderController extends Controller
                                 'product_id'=> $productId,
                                 'count'=> $amount,
                             ]);
-//                            DB::table('order_products')->insert([
-//                                'order_id'=>$orderid,
-//                                'product_id'=> $productId,
-//                                'count'=> $amount,
-//                                'created_at'=>date('Y-m-d H:i:s')
                         }
                     }
                 }
@@ -107,38 +82,21 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function pro(string $id)
-    {
 
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $products = DB::table('products')
-            ->where('status', '=','enable')
-            ->get();
-        $pivot = DB::table('order_products')
-            ->select('order_id','product_id','count')
-            ->where('order_id', $id)
-            ->get();
-        $users = DB::table('users')
-            ->where('status','=','enable')
-            ->get();
-        $orders = DB::table('orders')
-            ->join('users', 'users.id', '=', 'orders.user_id')
-            ->join('order_products', 'order_products.order_id', '=', 'orders.id')
-            ->join('products', 'products.id', '=', 'order_products.product_id')
-            ->select('orders.id','orders.title','orders.total_price','orders.explanations','order_products.count','order_products.product_id','orders.user_id', 'users.first_name','users.last_name','users.email','products.product_name','products.price')
-            ->where('order_id',$id)
-            ->get();
+        $users = User::all();
+        $products = Product::all();
+        $orders = Order::with('products')->where('id',$id)->get();
         foreach ($orders as $order)
 
 
 
-        return view('orders.editOrderMenue', ['users' => $users , 'products'=>$products , 'order'=>$order , 'pivot'=>$pivot]);
+        return view('orders.editOrderMenue', ['users' => $users , 'products'=>$products , 'order'=>$order]);
     }
 
     /**
@@ -146,12 +104,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        DB::table('order_products')
-            ->where('order_id',$id)
-        ->delete();
-        $products = DB::table('products')
-            ->where('status', '=','enable')
-            ->get();
+        $products = Product::all();
         $totalPrice = 0;
         $data = $request->all();
         $productsIds = [];
@@ -166,29 +119,31 @@ class OrderController extends Controller
             }
             $productsIds []= $product->id;
         }
-        DB::table('orders')
-            ->where('id',$id)
-            ->update([
-            'total_price'=>$totalPrice,
-        ]);
+        Order::find($id)->update(['total_price'=>$totalPrice,]);
+
         foreach ($productsIds as $productId){
             foreach ($data as $key =>$value ){
                 if($productId == $key) {
                     $amount = $request->$key;
                     if ($amount > 0) {
-                        DB::table('order_products')
-                            ->where('order_id',$id)
-                            ->updateOrInsert([
+                        Order_product::update([
                             'order_id'=>$id,
                             'product_id'=> $productId,
                             'count'=> $amount,
-                            'created_at'=>date('Y-m-d H:i:s')
                         ]);
+
+//                        DB::table('order_products')
+//                            ->where('order_id',$id)
+//                            ->updateOrInsert([
+//                            'order_id'=>$id,
+//                            'product_id'=> $productId,
+//                            'count'=> $amount,
+
                     }
                 }
             }
         }
-        return redirect('order.index');
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -196,9 +151,10 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('orders')
-            ->where('id', $id)
-            ->update(['status' => 'disable']);
+        $order = Order::find($id);
+        $order -> delete();
+        $pivot = Order_product::where('order_id' , $id);
+        $pivot -> delete();
         return back();
     }
 }

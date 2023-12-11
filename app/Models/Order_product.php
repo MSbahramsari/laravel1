@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order_product extends Model
 {
+    protected $table = 'order_product';
     protected $fillable = [
         'order_id',
         'product_id',
         'count'
     ];
-//    public function orders() {
-//        return $this->belongsToMany(Order::class);
-//    }
+    use softDeletes ;
 }
