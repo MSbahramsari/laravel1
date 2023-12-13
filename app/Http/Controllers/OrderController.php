@@ -19,7 +19,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with('products')->with('user')->get();
-        return view('.orders.ordersData' , ['orders'=>$orders]) ;
+        return view('.orders.ordersData', ['orders' => $orders]);
     }
 
     /**
@@ -29,7 +29,7 @@ class OrderController extends Controller
     {
         $products = Product::all();
         $users = User::all();
-        return view('orders.addOrder', ['users' => $users , 'products'=>$products]);
+        return view('orders.addOrder', ['users' => $users, 'products' => $products]);
 
     }
 
@@ -42,41 +42,50 @@ class OrderController extends Controller
         $products = Product::all();
         $totalPrice = 0;
         $data = $request->all();
-        $productsIds = [];
-        foreach ($products as $product){
-            foreach ($data as $key =>$value ){
-                if($product->id == $key){
+        $pcounts = [];
+        foreach ($products as $product) {
+            foreach ($data as $key => $value) {
+                if ($product->id == $key) {
                     $price = $product->price;
                     $amount = $request->$key;
                     $sum = $price * $amount;
                     $totalPrice += $sum;
+                    $pro_count = array('product_id'=>$product->id , 'count'=>$amount);
                 }
             }
-            $productsIds []= $product->id;
+            $pcounts []= $pro_count;
+
         }
-        Order::create([
-            'user_id'=>$request->user_id,
-            'title'=>$request->title,
-            'total_price'=>$totalPrice,
-        ]);
 
-        $orderid = DB::getPdo()->lastInsertId();
-            foreach ($productsIds as $productId){
-                foreach ($data as $key =>$value ){
-                    if($productId == $key) {
-                        $amount = $request->$key;
-                        if ($amount > 0) {
-                            Order_product::create([
-                                'order_id'=>$orderid,
-                                'product_id'=> $productId,
-                                'count'=> $amount,
-                            ]);
-                        }
-                    }
-                }
+            $order = Order::create([
+                'user_id' => $request->user_id,
+                'title' => $request->title,
+                'total_price' => $totalPrice,
+            ]);
+        foreach ($pcounts as $pcount){
+            if ($pcount['count']){
+
+                $order->products()->attach($pcount['product_id'], ['count' => $pcount['count']]);
             }
+        }
 
-        return redirect()->route('orders.index') ;
+//        $orderid = DB::getPdo()->lastInsertId();
+//        foreach ($productsIds as $productId) {
+//            foreach ($data as $key => $value) {
+//                if ($productId == $key) {
+//                    $amount = $request->$key;
+//                    if ($amount > 0) {
+//                        Order_product::create([
+//                            'order_id' => $orderid,
+//                            'product_id' => $productId,
+//                            'count' => $amount,
+//                        ]);
+//                    }
+//                }
+//            }
+//        }
+
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -91,12 +100,11 @@ class OrderController extends Controller
     {
         $users = User::all();
         $products = Product::all();
-        $orders = Order::with('products')->where('id',$id)->get();
+        $orders = Order::with('products')->where('id', $id)->get();
         foreach ($orders as $order)
 
 
-
-        return view('orders.editOrderMenue', ['users' => $users , 'products'=>$products , 'order'=>$order]);
+            return view('orders.editOrderMenue', ['users' => $users, 'products' => $products, 'order' => $order]);
     }
 
     /**
@@ -104,48 +112,43 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $pivot = Order_product::where('order_id' , $id)->forcedelete();
+//        $pivot = Order_product::where('order_id' , $id)->forcedelete();
         $products = Product::all();
         $totalPrice = 0;
         $data = $request->all();
-        $productsIds = [];
-        foreach ($products as $product){
-            foreach ($data as $key =>$value ){
-                if($product->id == $key){
+        $pc = [];
+        foreach ($products as $product) {
+            foreach ($data as $key => $value) {
+                if ($product->id == $key) {
                     $price = $product->price;
                     $amount = $request->$key;
                     $sum = $price * $amount;
                     $totalPrice += $sum;
+                    $count = (int)$amount;
+                    $poc = array('product_id' => $product->id, 'count' => $count);
                 }
             }
-            $productsIds []= $product->id;
+            $pc [] = $poc;
         }
-        Order::find($id)->update(['total_price'=>$totalPrice,]);
-
-        foreach ($productsIds as $productId){
-            foreach ($data as $key =>$value ){
-                if($productId == $key) {
-                    $amount = $request->$key;
-                    if ($amount > 0) {
-                        Order_product::create([
-                            'order_id'=>$id,
-                            'product_id'=> $productId,
-                            'count'=> $amount,
-                        ]);
-
-//                        DB::table('order_products')
-//                            ->where('order_id',$id)
-//                            ->updateOrInsert([
-//                            'order_id'=>$id,
-//                            'product_id'=> $productId,
-//                            'count'=> $amount,
-
-                    }
-                }
-            }
+        $order = Order::findOrFail($id);
+        foreach ($pc as $key => $pce) {
+            if ($key == 0)
+                $order->products()->syncWithPivotValues([$pce['product_id']], ['count' => $pce['count']]);
+            else
+                $order->products()->attach($pce['product_id'], ['count' => $pce['count']]);
         }
+        $order->update(['total_price' => $totalPrice,]);
+
+//        }
+
+
+
         return redirect()->route('orders.index');
+
     }
+//                }
+//            }
+
 
     /**
      * Remove the specified resource from storage.
@@ -153,9 +156,9 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         $order = Order::find($id);
-        $order -> delete();
-        $pivot = Order_product::where('order_id' , $id);
-        $pivot -> delete();
+        $order->delete();
+        $pivot = Order_product::where('order_id', $id);
+        $pivot->delete();
         return back();
     }
 }
