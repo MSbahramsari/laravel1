@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,23 +37,9 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
 
-        $request->validate([
-            'user_name'=>'required|max:20',
-            'last_name'=>'required|max:255',
-            'first_name'=>'required|max:255' ,
-            'age'=>'required|integer|min:18',
-            'gender'=>'required',
-            'email'=>'required',
-            'phone_number'=>'required|min:11|max:11',
-            'password'=>'required|min:8',
-            'address'=>'required',
-            'postal_code'=>'required|min:10|max:255',
-            'province'=>'required',
-            'city'=>'required',
-        ]);
         User::create([
             'user_name'=>$request->user_name,
             'first_name'=>$request->first_name,

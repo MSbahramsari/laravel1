@@ -11,7 +11,7 @@ Route::get('/', function () {
 });
 
 
-Route::view('/login', 'authorize.login')->name('login');
+//Route::view('/login', 'authorize.login')->name('login');
 
 Route::view('/register', 'authorize.register')->name('register');
 

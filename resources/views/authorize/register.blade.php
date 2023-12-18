@@ -21,19 +21,19 @@
             <form action="{{route('register')}}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="نام و نام خانوادگی">
+                    <input type="text" class="form-control" name="user_name" placeholder="نام کاربری">
                     <div class="input-group-append">
                         <span class="fa fa-user input-group-text"></span>
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="ایمیل">
+                    <input type="email" name="email" class="form-control" placeholder="ایمیل">
                     <div class="input-group-append">
                         <span class="fa fa-envelope input-group-text"></span>
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="رمز عبور">
+                    <input type="password" class="form-control"  name="password" placeholder="رمز عبور">
                     <div class="input-group-append">
                         <span class="input-group-text">
                             <i class="fa-solid fa-fingerprint"></i>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="تکرار رمز عبور">
+                    <input type="password" class="form-control" name="password_confirmation" placeholder="تکرار رمز عبور">
                     <div class="input-group-append">
                         <span class="input-group-text">
                             <i class="fa-solid fa-lock"></i>
@@ -52,7 +52,7 @@
                     <div class="col-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox"> با <a href="#">شرایط</a> موافق هستم
+                                <input type="checkbox" name="checkbox"> با <a href="#">شرایط</a> موافق هستم
                             </label>
                         </div>
                     </div>
