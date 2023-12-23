@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreUserRequest extends FormRequest
 {
@@ -22,20 +24,37 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-                'user_name'=>'required|max:20',
-                'last_name'=>'required|max:255',
-                'first_name'=>'required|max:255' ,
-                'age'=>'required|integer|min:18',
-                'gender'=>'required',
-                'email'=>'required',
-                'phone_number'=>'required|min:11|max:11',
-                'password'=>'required|min:8',
-                'address'=>'required',
-                'postal_code'=>'required',
-                'province'=>'required',
-                'city'=>'required',
-
+            'email' => 'required',
+            'password' => 'min:8|required',
         ];
     }
+//    public function rules(): array
+//    {
+//        return [
+//
+//                'user_name'=>'required|max:20',
+//                'last_name'=>'required|max:255',
+//                'first_name'=>'required|max:255' ,
+//                'age'=>'required|integer|min:18',
+//                'gender'=>'required',
+//                'email'=>'required',
+//                'phone_number'=>'required|min:11|max:11',
+//                'password'=>'required|min:8',
+//                'address'=>'required',
+//                'postal_code'=>'required',
+//                'province'=>'required',
+//                'city'=>'required',
+
+//        ];
+//    }
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        $response = response([$errors]);
+
+        throw new HttpResponseException($response);
+    }
+
 }
+

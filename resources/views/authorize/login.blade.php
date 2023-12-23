@@ -18,7 +18,7 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">فرم زیر را تکمیل کنید و ورود بزنید</p>
 
-            <form action="{{route('authorize')}}" method="post">
+            <form action="{{route('login')}}" method="post">
                 @csrf
                 @if ($errors->has('email'))
                     <div class="alert alert-danger">{{ $errors->first('email') }}</div>

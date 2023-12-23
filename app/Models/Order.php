@@ -19,8 +19,9 @@ class Order extends Model
     public function products() {
     return $this->belongsToMany(Product::class)->withPivot('count');
     }
+    public function factor() {
+        return $this->hasOne(Factor::class);
+    }
     use softDeletes ;
-//    public function pivot() {
-//        return $this->belongsToMany(Order_product::class);
-//    }
+
 }

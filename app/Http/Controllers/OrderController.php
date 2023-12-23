@@ -69,21 +69,7 @@ class OrderController extends Controller
             }
         }
 
-//        $orderid = DB::getPdo()->lastInsertId();
-//        foreach ($productsIds as $productId) {
-//            foreach ($data as $key => $value) {
-//                if ($productId == $key) {
-//                    $amount = $request->$key;
-//                    if ($amount > 0) {
-//                        Order_product::create([
-//                            'order_id' => $orderid,
-//                            'product_id' => $productId,
-//                            'count' => $amount,
-//                        ]);
-//                    }
-//                }
-//            }
-//        }
+
 
         return redirect()->route('orders.index');
     }

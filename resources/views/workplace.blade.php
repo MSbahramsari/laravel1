@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +9,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @include('styleSheets.styleSheets')
-{{--    <link rel="stylesheet" href="{{asset('persenalCss/app.css')}}">--}}
+    <link rel="stylesheet" href="{{asset('persenalCss/app.css')}}">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -39,8 +41,8 @@
                         <!-- small box -->
                         <div class="bg-color-1 small-box">
                             <div class="inner">
-                                <h3>{{--{{$customer_count}}--}}</h3>
-                                <p>تعداد مشتریان</p>
+{{--                                <h3>{{$customer_count}}</h3>--}}
+{{--                                <p>تعداد مشتریان</p>--}}
                             </div>
                             <div class="icon">
                                 <ion-icon name="people-outline"></ion-icon>
@@ -54,8 +56,8 @@
                         <!-- small box -->
                         <div class="small-box bg-color-2">
                             <div class="inner">
-                                <h3>{{--{{$factor_count}}--}}</h3>
-                                <p>تعداد فاکتورها</p>
+{{--                                <h3>{{$factor_count}}</h3>--}}
+{{--                                <p>تعداد فاکتورها</p>--}}
                             </div>
                             <div class="icon">
                                 <ion-icon name="receipt-outline"></ion-icon>
@@ -69,8 +71,8 @@
                         <!-- small box -->
                         <div class="small-box bg-color-3">
                             <div class="inner">
-                                <h3>{{--{{$order_count}}--}}</h3>
-                                <p>تعداد سفارشات</p>
+{{--                                <h3>{{$order_count}}</h3>--}}
+{{--                                <p>تعداد سفارشات</p>--}}
                             </div>
                             <div class="icon">
                                 <i class="fa-solid fa-cart-arrow-down fa-flip-horizontal"></i>
@@ -84,8 +86,8 @@
                         <!-- small box -->
                         <div class="small-box bg-color-4">
                             <div class="inner">
-                                <h3>{{--{{$product_count}}--}}</h3>
-                                <p>تعداد محصولات</p>
+{{--                                <h3>{{$product_count}}</h3>--}}
+{{--                                <p>تعداد محصولات</p>--}}
                             </div>
                             <div class="icon">
                                 <i class="fa-solid fa-tags fa-flip-horizontal"></i>

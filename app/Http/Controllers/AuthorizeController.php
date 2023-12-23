@@ -15,19 +15,19 @@ class AuthorizeController extends Controller
 
         try {
 
+
             if (!Auth::attempt($request->only(['email','password']))){
-                return response()->json([
+                return redirect()->back([
                     'status'=>false,
                     'massage'=>'user not found',
                 ], 401);
             }
             $user = User::where('email' , $request->email)->first();
+            $token = $user->createToken("API TOKEN")->plainTextToken;
+            session()->put('token', []);
+            session()->push('token', $token);
+            return redirect()->route('workplace');
 
-            return response()->json([
-                'status'=>true,
-                'massage'=>'user login seccsasfullhy',
-                'token'=>$user->createToken("API TOKEN")->plainTextToken
-            ], 200);
         } catch(\Throwable $th){
             return response()->json([
                 'status'=>false,
@@ -44,11 +44,8 @@ class AuthorizeController extends Controller
                 'password'=>Hash::make($request->password)
             ]);
             $token = $user->createToken("API TOKEN")->plainTextToken;
-            return response()->json([
-                'status'=>true,
-                'massage'=>'user register seccsasfullhy',
-                'token'=> $token
-            ], 200);
+            return redirect()->route('view.login');
+
         } catch(\Throwable $th){
             return response()->json([
                 'status'=>false,
@@ -57,6 +54,15 @@ class AuthorizeController extends Controller
         }
 
 
+    }
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->tokens->each(function ($token, $key) {
+            $token->delete();
+            Auth::logout();
+        });
+        return redirect('/login');
     }
 }
 

@@ -25,18 +25,21 @@ class LoginUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'=>'required',
-            'password'=>'min:8|required',
+            'email' => 'required',
+            'password' => 'min:8|required',
         ];
     }
+
     public function failedValidation(Validator $validator)
     {
-        $errors = $validator->errors(); // Here is your array of errors
-        $response = response()->json([
-            'message' => 'validation error',
-            'details' => $errors->messages(),
-        ], 401);
+        $errors = $validator->errors();
+        $redirect = redirect()
+            ->back()
+             ->withInput()
+            ->withErrors($errors);
 
-        throw new HttpResponseException($response);
+
+////
+        throw new HttpResponseException($redirect);
     }
 }

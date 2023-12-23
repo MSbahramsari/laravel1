@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class UserController extends Controller
@@ -37,8 +38,23 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      * @throws ValidationException
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
+        $validated = $request->validate([
+            'user_name'=>'required|max:20',
+            'last_name'=>'required|max:255',
+            'first_name'=>'required|max:255' ,
+            'age'=>'required|integer|min:18',
+            'gender'=>'required',
+            'email'=>'required',
+            'phone_number'=>'required|min:11|max:11',
+            'password'=>'required|min:8',
+            'address'=>'required',
+            'postal_code'=>'required',
+            'province'=>'required',
+            'city'=>'required',
+
+        ]);
 
         User::create([
             'user_name'=>$request->user_name,
