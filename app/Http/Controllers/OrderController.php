@@ -28,7 +28,7 @@ class OrderController extends Controller
     public function create()
     {
         $products = Product::all();
-        $users = User::all();
+        $users = User::where('phone_number','!=','null')->get();
         return view('orders.addOrder', ['users' => $users, 'products' => $products]);
 
     }
