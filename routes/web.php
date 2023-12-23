@@ -36,7 +36,7 @@ Route::view('/login', 'authorize.login')->name('view.login');
 
 Route::view('/register', 'authorize.register')->name('view.register');
 
-//Route::middleware('auth:sanctum')->group(function (){
+Route::middleware('auth:sanctum')->group(function (){
     Route::get('/workplace', function () {
         return view('workplace');
     })->name('workplace');
@@ -74,4 +74,4 @@ Route::view('/register', 'authorize.register')->name('view.register');
     Route::get('/factors/{id}/edit', [FactorController::class, 'edit'])->name('factors.edit');
     Route::any('/factors/{id}', [FactorController::class, 'update'])->name('factors.update');
     Route::post('/factors/{id}/delete', [FactorController::class, 'destroy'])->name('factors.destroy');
-//});
+});

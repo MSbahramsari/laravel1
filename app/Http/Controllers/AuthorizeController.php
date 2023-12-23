@@ -14,8 +14,6 @@ class AuthorizeController extends Controller
     public function loginUser(LoginUserRequest $request){
 
         try {
-
-
             if (!Auth::attempt($request->only(['email','password']))){
                 return redirect()->back([
                     'status'=>false,

@@ -29,7 +29,7 @@ class RegisterUserRequest extends FormRequest
             'email'=>'required',
             'password'=>'min:8|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation'=>'min:8',
-//            'checkbox'=>'accepted'
+            'checkbox'=>'accepted'
         ];
     }
     public function failedValidation(Validator $validator)
